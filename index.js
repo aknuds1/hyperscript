@@ -58,19 +58,7 @@ function context () {
         for (var k in l) {
           if('function' === typeof l[k]) {
             if(/^on\w+/.test(k)) {
-              (function (k, l) { // capture k, l in the closure
-                if (e.addEventListener){
-                  e.addEventListener(k.substring(2), l[k], false)
-                  cleanupFuncs.push(function(){
-                    e.removeEventListener(k.substring(2), l[k], false)
-                  })
-                }else{
-                  e.attachEvent(k, l[k])
-                  cleanupFuncs.push(function(){
-                    e.detachEvent(k, l[k])
-                  })
-                }
-              })(k, l)
+              e[k] = l[k]
             } else {
               // observable
               e[k] = l[k]()
@@ -156,5 +144,3 @@ function forEach (arr, fn) {
 function isArray (arr) {
   return Object.prototype.toString.call(arr) == '[object Array]'
 }
-
-

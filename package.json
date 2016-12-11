@@ -1,18 +1,18 @@
 {
-  "name": "hyperscript",
-  "version": "2.0.2",
-  "homepage": "https://github.com/dominictarr/hyperscript",
+  "name": "@arve.knudsen/hyperscript",
+  "version": "2.1.0",
+  "homepage": "https://github.com/aknuds1/hyperscript",
   "repository": {
     "type": "git",
-    "url": "git://github.com/dominictarr/hyperscript.git"
+    "url": "git://github.com/aknuds1/hyperscript.git"
   },
-  "author": "'Dominic Tarr' <dominic.tarr@gmail.com> (http://dominictarr.com)",
+  "author": "'Dominic Tarr' <dominic.tarr@gmail.com> (http://dominictarr.com) 'Arve Knudsen' <arve.knudsen@gmail.com> (http://arveknudsen.com)",
   "license": "MIT",
   "devDependencies": {
     "tape": "~2.13.3",
     "observable": "~2.1.2",
     "ispy": "~0.1.2",
-    "simulate": "0.0.3"
+    "simulate": "0.0.5"
   },
   "dependencies": {
     "browser-split": "0.0.0",

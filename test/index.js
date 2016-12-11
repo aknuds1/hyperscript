@@ -1,4 +1,11 @@
 global.document = require('html-element').document;
+document.createEvent = function () {
+  return {
+    initEvent: function () {
+
+    },
+  }
+}
 
 var test = require('tape')
 var h    = require('../')
@@ -57,11 +64,10 @@ test('can set properties', function(t){
 })
 
 test('registers event handlers', function(t){
+  t.plan(1)
   var onClick = spy()
   var p = h('p', {onclick: onClick}, 'something')
-  simu.click(p)
-  t.assert(onClick.called)
-  t.end()
+  t.equal(p.onclick, onClick)
 })
 
 test('sets styles', function(t){
