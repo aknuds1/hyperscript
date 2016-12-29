@@ -57,9 +57,18 @@ test('can default element types', function(t){
 
 test('can set properties', function(t){
   var a = h('a', {href: 'http://google.com'})
-  t.equal(a.href, 'http://google.com/')
+  t.equal(a.href, 'http://google.com')
   var checkbox = h('input', {name: 'yes', type: 'checkbox'})
   t.equal(checkbox.outerHTML, '<input name="yes" type="checkbox">')
+  t.end()
+})
+
+test('can set attributes', function(t){
+  var checkbox = h('input', {
+    attrs: {name: 'yes', type: 'checkbox',},
+  })
+  t.equal(checkbox.getAttribute('name'), 'yes')
+  t.equal(checkbox.getAttribute('type'), 'checkbox')
   t.end()
 })
 
