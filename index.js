@@ -63,8 +63,10 @@ function context () {
         }
         for (var k in l) {
           if('function' === typeof l[k]) {
-            if(/^on\w+/.test(k) && k !== 'onload' && k !== 'onunload') {
-              e[k] = l[k]
+            if(/^on\w+/.test(k)) {
+              if (k !== 'onload' && k !== 'onunload') {
+                e[k] = l[k]
+              }
             } else {
               // observable
               e[k] = l[k]()
