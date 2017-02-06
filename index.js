@@ -1,5 +1,6 @@
 var split = require('browser-split')
 var ClassList = require('class-list')
+var onload = require('on-load')
 
 var w = typeof window === 'undefined' ? require('html-element') : window
 var document = w.document
@@ -55,9 +56,14 @@ function context () {
       else if(l instanceof Text)
         e.appendChild(r = l)
       else if ('object' === typeof l) {
+        var loadHandler = l['onload']
+        var unloadHandler = l['onunload']
+        if (loadHandler != null || unloadHandler != null) {
+          onload(e, loadHandler, unloadHandler, 'hyperscript')
+        }
         for (var k in l) {
           if('function' === typeof l[k]) {
-            if(/^on\w+/.test(k)) {
+            if(/^on\w+/.test(k) && k !== 'onload' && k !== 'onunload') {
               e[k] = l[k]
             } else {
               // observable

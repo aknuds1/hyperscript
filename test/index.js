@@ -7,10 +7,12 @@ document.createEvent = function () {
   }
 }
 
+var proxyquire = require('proxyquire')
+var sinon = require('sinon')
+var h = require('..')
 var test = require('tape')
-var h    = require('../')
-var o    = require('observable')
-var spy  = require('ispy')
+var o = require('observable')
+var spy = require('ispy')
 var simu = require('simulate')
 
 test('simple', function (t) {
@@ -172,5 +174,46 @@ test('context cleanup removes event handlers', function(t){
 test('unicode selectors', function (t) {
   t.equal(h('.⛄').outerHTML, '<div class="⛄"></div>')
   t.equal(h('span#⛄').outerHTML, '<span id="⛄"></span>')
+  t.end()
+})
+
+test('can supply onload hook', function (t) {
+  function onloadHandler() {}
+  var onloadSpy = sinon.spy()
+  var h = proxyquire('..', {
+    'on-load': onloadSpy,
+  })
+  const elem = h('div', {
+    onload: onloadHandler,
+  })
+  t.ok(onloadSpy.calledWith(elem, onloadHandler, undefined, 'hyperscript'))
+  t.end()
+})
+
+test('can supply onunload hook', function (t) {
+  function onunloadHandler() {}
+  var onloadSpy = sinon.spy()
+  var h = proxyquire('..', {
+    'on-load': onloadSpy,
+  })
+  const elem = h('div', {
+    onunload: onunloadHandler,
+  })
+  t.ok(onloadSpy.calledWith(elem, undefined, onunloadHandler, 'hyperscript'))
+  t.end()
+})
+
+test('can supply both onload and onunload hooks at once', function (t) {
+  function onunloadHandler() {}
+  function onloadHandler() {}
+  var onloadSpy = sinon.spy()
+  var h = proxyquire('..', {
+    'on-load': onloadSpy,
+  })
+  const elem = h('div', {
+    onload: onloadHandler,
+    onunload: onunloadHandler,
+  })
+  t.ok(onloadSpy.calledWith(elem, onloadHandler, onunloadHandler, 'hyperscript'))
   t.end()
 })
